@@ -12,7 +12,7 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 function Navbar () {
 
     const total = 25000;
-    const token = false;
+    const token = true;
 
     return (
 
