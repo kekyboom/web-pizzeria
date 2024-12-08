@@ -1,17 +1,31 @@
-import { pizzas } from "../data/pizzas"
+import { useState, useEffect } from "react";
 import { formatCurr } from "../utils/formatCurr";
-import { useState } from "react";
+
 
 
 function Cart () {
-  const initialCart = pizzas.slice(0, 3).map((pizza) => ({
-    ...pizza,
-    amount: 1,
-  }));
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/pizzas");
+        const data = await res.json();
+        const initialCart = data.slice(0, 3).map((pizza) => ({
+          ...pizza,
+          amount: 1,
+        }));
+        setCart(initialCart);
+      } catch (err) {
+        console.error("Error al cargar las pizzas:", err);
+      }
+    };
+
+    getData();
+  }, []);
 
   //Incrementar
-  const [cart, setCart] = useState(initialCart); 
-
   const increaseAmount = (id) => {
     setCart((prevCart) =>
       prevCart.map((pickedPizza) =>
@@ -41,8 +55,8 @@ function Cart () {
       {
 
       cart.map((pizza) => (
-        <div >
-          <div className="flex items-center px-20 py-5 drop-shadow-md w-fit border-b-2" key={pizza.id}>
+        <div  key={pizza.id}>
+          <div className="flex items-center px-20 py-5 drop-shadow-md w-fit border-b-2">
             <img  src={pizza.img} alt={pizza.name} className="size-32 rounded-lg "/>
             <p className="px-3 w-40 capitalize font-semibold text-xl">{pizza.name}</p>
               <div className="flex items-center px-2 space-x-2 space-y-2 ">

@@ -1,5 +1,7 @@
 import { LuPizza } from "react-icons/lu";
-import { formatCurr } from "../utils/formatCurr"
+import { formatCurr } from "../utils/formatCurr";
+import { FaShoppingCart } from "react-icons/fa";
+
 
 function CardPizza ({pizza}) {
     return (
@@ -18,18 +20,15 @@ function CardPizza ({pizza}) {
                     <div className="flex ">
                         <LuPizza className="text-black "/>
                         {/*<p className="pl-1 mb-3 text-sm text-gray-700 dark:text-gray-700 capitalize">{pizza.ingredients.join(", ")}</p>*/}
-                        <ul><li className="capitalize">{pizza.ingredients.join(", ")}</li></ul>
+                        <ul><li key={pizza.id} className="capitalize">{pizza.ingredients.join(", ")}</li></ul>
                     </div>
 
-                    <p className="mb-5 text-lg font-bold text-gray-900 dark:text-black">Precio: ${formatCurr(pizza.price)}</p>
+                    <p className="mb-5 text-lg font-bold text-gray-900 dark:text-black mt-2">Precio: ${formatCurr(pizza.price)}</p>
                     <div className="flex gap-3">
                         
                         <button type="button" className="flex items-center px-6 py-2 text-sm font-medium text-black bg-yellow-600 rounded-lg hover:bg-yellow-400 focus:ring-2  dark:bg-yellow-500 dark:hover:bg-yellow-400 dark:focus:ring-yellow-600 transition">
-                            <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                                <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0- 184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                            </svg>
+                        <FaShoppingCart className="text-black mx-2"/>
                             Añadir
-
                         </button>
                         <button type="button" className="flex items-center px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-300 dark:bg-neutral-800 dark:hover:bg-black transition">
                             Ver Más
