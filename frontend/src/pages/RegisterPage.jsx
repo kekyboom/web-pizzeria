@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
     const [email, setEmail] = useState("");
@@ -89,6 +90,7 @@ const RegisterPage = () => {
                             <p className="text-green-500 text-sm">{success}</p>)}
 
                         <button type="submit" className="w-full text-white bg-yellow-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Crear Cuenta</button>
+                        <p className="text-white pt-1"> ¿Ya Tienes Cuenta? <Link className="text-yellow-500 hover:underline" to="/login">Inicia Sesión</Link></p>
 
                     </form>
                 </div>

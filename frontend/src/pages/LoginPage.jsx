@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -60,6 +61,7 @@ const LoginPage = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             />
+                            <p className="text-white pt-5"> ¿No Tienes Cuenta? <Link className="text-yellow-500 hover:underline" to="/register">Registrate</Link></p>
                         </div>
                         
                             {error && (
