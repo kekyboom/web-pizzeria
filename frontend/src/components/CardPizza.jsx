@@ -1,9 +1,15 @@
 import { LuPizza } from "react-icons/lu";
-import { formatCurr } from "../utils/formatCurr";
 import { FaShoppingCart } from "react-icons/fa";
-
+import { formatCurr } from "../utils/formatCurr";
+import React, { useContext } from "react";
+import CartContext from "../context/CartContext";
+import { useSelectedPizza } from "../context/PizzaContext";
 
 function CardPizza ({pizza}) {
+
+    const { addToCart } = useContext(CartContext);
+    const {selectedPizzaDetails} = useSelectedPizza();
+
     return (
         <>
             <div className="bg-white border rounded-lg shadow-lg overflow-hidden dark:bg-gray-50 w-80 h-max">
@@ -26,11 +32,11 @@ function CardPizza ({pizza}) {
                     <p className="mb-5 text-lg font-bold text-gray-900 dark:text-black mt-2">Precio: ${formatCurr(pizza.price)}</p>
                     <div className="flex gap-3">
                         
-                        <button type="button" className="flex items-center px-6 py-2 text-sm font-medium text-black bg-yellow-600 rounded-lg hover:bg-yellow-400 focus:ring-2  dark:bg-yellow-500 dark:hover:bg-yellow-400 dark:focus:ring-yellow-600 transition">
+                        <button onClick={() => addToCart(pizza)} type="button" className="flex items-center px-6 py-2 text-sm font-medium text-black bg-yellow-600 rounded-lg hover:bg-yellow-400 focus:ring-2  dark:bg-yellow-500 dark:hover:bg-yellow-400 dark:focus:ring-yellow-600 transition">
                         <FaShoppingCart className="text-black mx-2"/>
                             Añadir
                         </button>
-                        <button type="button" className="flex items-center px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-300 dark:bg-neutral-800 dark:hover:bg-black transition">
+                        <button onClick={() => selectedPizzaDetails(pizza.id)} type="button" className="flex items-center px-6 py-2 text-sm font-medium text-white rounded-lg hover:bg-gray-700 dark:bg-neutral-800 dark:hover:bg-black transition">
                             Ver Más
                             <svg className="w-4 h-4 ml-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>

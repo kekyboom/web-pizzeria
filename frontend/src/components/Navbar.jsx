@@ -6,19 +6,21 @@ import { IoLogInSharp } from "react-icons/io5";
 import { GiFullPizza } from "react-icons/gi";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-
+import React, { useContext } from "react";
+import CartContext from "../context/CartContext";
 
 
 
 function Navbar () {
 
-    const total = 25000;
-    const token = true;
+    const token = false;
+
+    const { calculateTotal } = useContext(CartContext);
 
     return (
 
         <>
-            <nav className="bg-white border-gray-200 dark:bg-neutral-900">
+            <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-neutral-900">
 
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <Link to="/" className="text-2xl font-bold text-white text-center">Pizzería Mamma Mia</Link>
@@ -26,7 +28,7 @@ function Navbar () {
             <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                 <div className="flex items-center ">
                     <FaShoppingCart className="dark:text-white"/>
-                    <Link to="/cart" className="block md:px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Total: ${formatCurr(total)}</Link>
+                    <Link to="/cart" className="block md:px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Total: ${formatCurr(calculateTotal())}</Link>
                 </div>
                 <button data-collapse-toggle="navbar-cta" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-cta" aria-expanded="false">
                     <span className="sr-only">Open main menu</span>

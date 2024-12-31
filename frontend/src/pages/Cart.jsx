@@ -1,55 +1,13 @@
-import { useState, useEffect } from "react";
 import { formatCurr } from "../utils/formatCurr";
-
+import React, { useContext } from "react";
+import CartContext from "../context/CartContext";
 
 
 function Cart () {
+  const { cart, increaseAmount, decreaseAmount, calculateTotal } = useContext(CartContext);
 
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/pizzas");
-        const data = await res.json();
-        const initialCart = data.slice(0, 3).map((pizza) => ({
-          ...pizza,
-          amount: 1,
-        }));
-        setCart(initialCart);
-      } catch (err) {
-        console.error("Error al cargar las pizzas:", err);
-      }
-    };
-
-    getData();
-  }, []);
-
-  //Incrementar
-  const increaseAmount = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((pickedPizza) =>
-          pickedPizza.id === id ? { ...pickedPizza, amount: pickedPizza.amount +1 } : pickedPizza
-      )
-    );
-  };
-
-  //Disminuir & filtrar
-  const decreaseAmount = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((pickedPizza) =>
-          pickedPizza.id === id && pickedPizza.amount > 0 ? { ...pickedPizza, amount: pickedPizza.amount -1 } : pickedPizza 
-      ).filter((pickedPizza) => pickedPizza.amount > 0)
-    );
-  };
-
-  //Suma total del carrito 
-  const calculateTotal = () => {
-    return cart.reduce((total, pickedPizza) => total + pickedPizza.price * pickedPizza.amount, 0)
-  }
-    
   return (
-    <div>
+    <div className="mb-32 overflow-hidden">
       <p  className="mx-20 mt-10 font-semibold text-2xl ">Detalles del Pedido:</p>
 
       {

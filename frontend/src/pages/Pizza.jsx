@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { LuPizza } from "react-icons/lu";
 import { formatCurr } from "../utils/formatCurr";
 import { FaShoppingCart } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import CartContext from "../context/CartContext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 
 function Pizza() {
+  const { id } = useParams();
   const [pizza, setPizza] = useState(null);
+  const { addToCart } = useContext(CartContext);
 
-  // Cargar datos 
+  {/* Carga de datos */}
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/pizzas/p001");
+        const res = await fetch(`http://localhost:5000/api/pizzas/${id}`);
         const data = await res.json();
         setPizza(data);
       } catch (err) {
@@ -20,7 +25,7 @@ function Pizza() {
     };
 
     getData();
-  }, []);
+  }, [id]);
 
   if (!pizza) {
     return (
@@ -59,13 +64,15 @@ function Pizza() {
         <p className="mt-5 mb-12 text-xl font-bold text-gray-900 dark:text-black">
           Precio: {formatCurr(pizza.price)}
         </p>
-          <button
+        <div className="flex">
+          <button  onClick={() => addToCart(pizza)}
             type="button"
-            className="flex items-center px-8 py-3 text-2xl font-medium text-black bg-yellow-600 rounded-lg hover:bg-yellow-400 focus:ring-2  dark:bg-yellow-500 dark:hover:bg-yellow-400 dark:focus:ring-yellow-600 transition w-1/3">        
+            className="flex items-center px-8 py-3 text-2xl font-medium text-black bg-yellow-600 rounded-lg hover:bg-yellow-400 focus:ring-2  dark:bg-yellow-500 dark:hover:bg-yellow-400 dark:focus:ring-yellow-600 transition w-92">        
           <FaShoppingCart className="text-black mx-2"/>
             Añadir
           </button>
-
+          <Link to="/" className="ml-10 pl-10 flex items-center px-8 py-3 text-2xl font-medium text-white rounded-lg dark:bg-neutral-800 dark:hover:bg-black transition w-62 ">Volver al Inicio</Link>
+        </div>
       </div>
     </div>
   );
