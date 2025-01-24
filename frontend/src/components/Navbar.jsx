@@ -8,13 +8,11 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
 import CartContext from "../context/CartContext";
-
-
+import { useUser } from "../context/UserContext";
 
 function Navbar () {
 
-    const token = false;
-
+    const {token, logout } = useUser();
     const { calculateTotal } = useContext(CartContext);
 
     return (
@@ -64,7 +62,7 @@ function Navbar () {
                             { /*Logout*/ }
                             <div className="flex items-center">
                                 <RiLogoutBoxFill className="text-white pr-1 text-lg" />
-                                <button className="text-white pr-7 hover:text-yellow-500">Logout</button>
+                                <button onClick={() => logout()} className="text-white pr-7 hover:text-yellow-500">Logout</button>
                             </div>
                         </div>
                         ) : (

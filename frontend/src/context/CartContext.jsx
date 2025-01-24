@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
       if (existingPizza) {
         return prevCart.map((item) =>
           item.id === pizza.id
-            ? { ...item, amount: item.amount + 1 }
+            ? { ...item, amount: item.amount + 1 }   
             : item
         );
       }

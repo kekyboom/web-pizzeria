@@ -1,10 +1,12 @@
 import { formatCurr } from "../utils/formatCurr";
 import React, { useContext } from "react";
 import CartContext from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 
 
 function Cart () {
   const { cart, increaseAmount, decreaseAmount, calculateTotal } = useContext(CartContext);
+  const {token} = useUser();
 
   return (
     <div className="mb-32 overflow-hidden">
@@ -29,7 +31,8 @@ function Cart () {
     }
       <div className="mx-20 my-10 flex items-center ">
         <p className="font-semibold text-xl w-72">TOTAL: ${formatCurr(calculateTotal())}</p>
-        <button className="ml-32 text-center content-center w-32 h-10 text-white bg-neutral-700 rounded-md drop-shadow-md">PAGAR</button>
+        <button disabled={token} className={`"ml-32 text-center content-center w-32 h-10 text-white rounded-md drop-shadow-md" ${
+          token ? "bg-neutral-700 cursor-pointer" : "bg-gray-400 cursor-not-allowed" }`}>PAGAR</button>
       </div>
     </div>
   )
