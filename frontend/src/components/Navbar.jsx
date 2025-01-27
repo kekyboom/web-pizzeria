@@ -14,7 +14,7 @@ function Navbar () {
 
     const {token, logout } = useUser();
     const { calculateTotal } = useContext(CartContext);
-
+    
     return (
 
         <>

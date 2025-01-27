@@ -5,8 +5,24 @@ import { useUser } from "../context/UserContext";
 
 
 function Cart () {
-  const { cart, increaseAmount, decreaseAmount, calculateTotal } = useContext(CartContext);
+  const { cart, increaseAmount, decreaseAmount, calculateTotal, checkout } = useContext(CartContext);
   const {token} = useUser();
+
+  const handleCheckout = async () => {
+
+    if (cart.length === 0) {
+      alert("Agregue algo al carrito"); // Validación si el carrito está vacío
+      return;
+    }
+    
+    try {
+      const response = await checkout(token); 
+      alert("Pedido realizado con éxito.");
+      console.log("Respuesta del servidor:", response);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="mb-32 overflow-hidden">
@@ -31,7 +47,7 @@ function Cart () {
     }
       <div className="mx-20 my-10 flex items-center ">
         <p className="font-semibold text-xl w-72">TOTAL: ${formatCurr(calculateTotal())}</p>
-        <button disabled={token} className={`"ml-32 text-center content-center w-32 h-10 text-white rounded-md drop-shadow-md" ${
+        <button onClick={handleCheckout} disabled={!token} className={`ml-32 text-center content-center w-32 h-10 text-white rounded-md drop-shadow-md ${
           token ? "bg-neutral-700 cursor-pointer" : "bg-gray-400 cursor-not-allowed" }`}>PAGAR</button>
       </div>
     </div>

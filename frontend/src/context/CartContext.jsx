@@ -42,8 +42,35 @@ export const CartProvider = ({ children }) => {
   const calculateTotal = () =>
     cart.reduce((total, item) => total + item.price * item.amount, 0);
 
+   // Método para enviar el carrito al backend
+
+   const checkout = async (token) => {
+
+    try {
+      const res = await fetch("http://localhost:5000/api/checkouts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cart }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al realizar el pedido");
+      }
+
+      const data = await res.json();
+      setCart([]); 
+      return data;
+    } catch (error) {
+      console.error("Error en el checkout:", error.message);
+      throw error;
+    }
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, increaseAmount, decreaseAmount, calculateTotal }}>
+    <CartContext.Provider value={{ cart, addToCart, increaseAmount, decreaseAmount, calculateTotal, checkout }}>
       {children}
     </CartContext.Provider>
   );
